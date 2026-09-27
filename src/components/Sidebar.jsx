@@ -23,6 +23,7 @@ export default function Sidebar({
   setIsCollapsed,
   counts,
   onOpenSupabaseModal,
+  onOpenAICopilot,
   currentUser,
   onLogout
 }) {
@@ -95,6 +96,13 @@ export default function Sidebar({
           isHighlight: true
         },
         {
+          id: 'copilot',
+          label: 'AI Founder Copilot',
+          icon: Sparkles,
+          badge: 'Gemini',
+          isHighlight: true
+        },
+        {
           id: 'team',
           label: 'Team Directory',
           icon: Users,
@@ -146,7 +154,13 @@ export default function Sidebar({
             <button
               key={item.id}
               className={`nav-item-btn ${isActive ? 'active' : ''}`}
-              onClick={() => setCurrentView(item.id)}
+              onClick={() => {
+                if (item.id === 'copilot') {
+                  if (onOpenAICopilot) onOpenAICopilot();
+                } else {
+                  setCurrentView(item.id);
+                }
+              }}
               title={isCollapsed ? item.label : undefined}
               style={item.isHighlight && !isActive ? { color: '#C2410C' } : undefined}
             >

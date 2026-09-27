@@ -336,6 +336,20 @@ export default function TaskFlowCanvas({
     setEdges(templates.upiPipeline.edges);
   }, []);
 
+  // Listen for AI-generated canvas events
+  useEffect(() => {
+    const handleLoadAICanvas = (e) => {
+      if (e.detail?.nodes && Array.isArray(e.detail.nodes)) {
+        setNodes(e.detail.nodes);
+        setEdges(e.detail.edges || []);
+        setPan({ x: 60, y: 60 });
+        setZoom(1);
+      }
+    };
+    window.addEventListener('taskflow_load_ai_canvas', handleLoadAICanvas);
+    return () => window.removeEventListener('taskflow_load_ai_canvas', handleLoadAICanvas);
+  }, []);
+
   // Save Canvas to localStorage whenever nodes or edges update
   useEffect(() => {
     if (nodes.length > 0) {

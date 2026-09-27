@@ -27,6 +27,7 @@ import AnalyticsView from './components/AnalyticsView';
 import SupabaseModal from './components/SupabaseModal';
 import LoginPage from './components/LoginPage';
 import TaskFlowCanvas from './components/TaskFlowCanvas';
+import FounderAICopilot from './components/FounderAICopilot';
 
 import {
   apiGetTasks,
@@ -75,6 +76,7 @@ export default function App() {
   const [selectedTask, setSelectedTask] = useState(null);
   const [initialTeamForModal, setInitialTeamForModal] = useState(null);
   const [isSupabaseModalOpen, setIsSupabaseModalOpen] = useState(false);
+  const [isAICopilotOpen, setIsAICopilotOpen] = useState(false);
 
   // Toast notifications
   const [toast, setToast] = useState(null);
@@ -303,6 +305,7 @@ export default function App() {
         setIsCollapsed={setIsSidebarCollapsed}
         counts={counts}
         onOpenSupabaseModal={() => setIsSupabaseModalOpen(true)}
+        onOpenAICopilot={() => setIsAICopilotOpen(true)}
         currentUser={currentUser}
         onLogout={handleLogout}
       />
@@ -320,6 +323,7 @@ export default function App() {
             setIsTaskModalOpen(true);
           }}
           onOpenSupabaseModal={() => setIsSupabaseModalOpen(true)}
+          onOpenAICopilot={() => setIsAICopilotOpen(true)}
           overdueTasks={overdueTasks}
           dueTodayTasks={dueTodayTasks}
           onSelectTask={(task) => setSelectedTask(task)}
@@ -605,6 +609,88 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* Founder AI Copilot (Gemini Pro) */}
+      <FounderAICopilot
+        isOpen={isAICopilotOpen}
+        onClose={() => setIsAICopilotOpen(false)}
+        tasks={tasks}
+        employees={employees}
+        teams={teams}
+        currentUser={currentUser}
+        onAssignTask={handleSaveTask}
+        onOpenTaskModalWithData={(taskData) => {
+          setEditingTask(taskData);
+          setIsTaskModalOpen(true);
+        }}
+        onNavigateToCanvas={() => setCurrentView('canvas')}
+        showToast={showToast}
+      />
+
+      {/* Floating AI Copilot Trigger button for quick access across all pages */}
+      <button
+        className="floating-ai-launcher-btn"
+        onClick={() => setIsAICopilotOpen(true)}
+        title="Ask TaskFlow Founder AI Copilot"
+        id="floating-ai-copilot-trigger"
+        style={{
+          position: 'fixed',
+          bottom: '24px',
+          right: '24px',
+          zIndex: 800,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          padding: '10px 16px',
+          borderRadius: '30px',
+          background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
+          color: '#FFFFFF',
+          border: '1.5px solid rgba(245, 107, 44, 0.4)',
+          boxShadow: '0 8px 24px -4px rgba(15, 23, 42, 0.4), 0 0 16px rgba(245, 107, 44, 0.25)',
+          cursor: 'pointer',
+          fontWeight: '700',
+          fontSize: '13px',
+          transition: 'transform 0.15s ease, box-shadow 0.15s ease'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+          e.currentTarget.style.boxShadow =
+            '0 12px 28px -4px rgba(15, 23, 42, 0.5), 0 0 20px rgba(245, 107, 44, 0.4)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(0) scale(1)';
+          e.currentTarget.style.boxShadow =
+            '0 8px 24px -4px rgba(15, 23, 42, 0.4), 0 0 16px rgba(245, 107, 44, 0.25)';
+        }}
+      >
+        <div
+          style={{
+            width: '24px',
+            height: '24px',
+            borderRadius: '8px',
+            background: 'linear-gradient(135deg, #F56B2C 0%, #EA580C 100%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#FFF'
+          }}
+        >
+          <Sparkles size={14} />
+        </div>
+        <span>Ask Founder AI</span>
+        <span
+          style={{
+            padding: '2px 7px',
+            backgroundColor: 'rgba(245, 107, 44, 0.25)',
+            color: '#F97316',
+            borderRadius: '10px',
+            fontSize: '10px',
+            fontWeight: '800'
+          }}
+        >
+          Gemini
+        </span>
+      </button>
     </div>
   );
 }

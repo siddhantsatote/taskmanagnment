@@ -25,6 +25,7 @@ export default function TopBar({
   setCurrentView,
   onOpenNewTaskModal,
   onOpenSupabaseModal,
+  onOpenAICopilot,
   overdueTasks = [],
   dueTodayTasks = [],
   onSelectTask,
@@ -194,6 +195,31 @@ export default function TopBar({
             </>
           )}
         </div>
+
+        {/* AI Founder Copilot Trigger */}
+        <button
+          onClick={onOpenAICopilot}
+          id="topbar-ai-copilot-btn"
+          style={{
+            padding: '7px 13px',
+            borderRadius: '9px',
+            border: '1px solid #FED7AA',
+            background: 'linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)',
+            color: '#C2410C',
+            fontSize: '12px',
+            fontWeight: '700',
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            boxShadow: '0 2px 5px rgba(245, 107, 44, 0.12)',
+            transition: 'all 0.15s ease'
+          }}
+          title="Open Founder AI Copilot for insights, task assignment, and custom flowcharts"
+        >
+          <Sparkles size={15} style={{ color: '#EA580C' }} />
+          <span>Ask AI</span>
+        </button>
 
         {/* Create Task Button */}
         <button className="btn-primary" onClick={onOpenNewTaskModal} id="topbar-new-task-btn" style={{ padding: '8px 14px' }}>
