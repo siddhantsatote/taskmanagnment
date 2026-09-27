@@ -3,9 +3,24 @@
 > **An all-in-one operations operating system, visual workflow canvas, and Gemini AI copilot purpose-built for Indian founders, MSMEs, and high-velocity teams.**
 
 <p align="center">
+  <a href="https://taskmanagnment.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/🚀%20Live%20Deployment-taskmanagnment.vercel.app-F56B2C?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+  </a>
+</p>
+
+<p align="center">
+  <strong>🌐 Live App:</strong> <a href="https://taskmanagnment.vercel.app/">https://taskmanagnment.vercel.app/</a>
+</p>
+
+<p align="center">
   <img src="public/poster.jpg" alt="TaskFlow India Executive Operations & Workflow Suite" width="100%" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);" />
 </p>
 
+<p align="center">
+  <img src="public/hackathon_poster.jpg" alt="FIT-FEST 2026 Hackathon Presentation Poster" width="85%" style="border-radius: 14px; box-shadow: 0 12px 35px rgba(0,0,0,0.18);" />
+</p>
+
+[![Live Demo](https://img.shields.io/badge/Vercel-Deployed-000000?logo=vercel&logoColor=white)](https://taskmanagnment.vercel.app/)
 [![React](https://img.shields.io/badge/React-18.x-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-8.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Google Gemini](https://img.shields.io/badge/Google%20Gemini-2.5%20Flash%20%2F%20Pro-8E75C4?logo=googlegemini&logoColor=white)](https://ai.google.dev/)
