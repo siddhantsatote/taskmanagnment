@@ -128,9 +128,9 @@ export default function App() {
     return tasks;
   }, [tasks, currentUser]);
 
-  // Disallow employee from accessing founder overview
+  // Disallow employee from accessing founder overview or workflow canvas
   useEffect(() => {
-    if (currentUser?.role === 'employee' && currentView === 'dashboard') {
+    if (currentUser?.role === 'employee' && (currentView === 'dashboard' || currentView === 'canvas')) {
       setCurrentView('portal');
     }
   }, [currentUser, currentView]);
@@ -480,8 +480,8 @@ export default function App() {
             </div>
           )}
 
-          {/* VIEW: WORKFLOW CANVAS (FIGMA / MIRO STYLE) */}
-          {currentView === 'canvas' && (
+          {/* VIEW: WORKFLOW CANVAS (FIGMA / MIRO STYLE - FOUNDER/ADMIN ONLY) */}
+          {currentView === 'canvas' && currentUser?.role !== 'employee' && (
             <TaskFlowCanvas
               tasks={visibleTasks}
               employees={employees}
@@ -627,70 +627,72 @@ export default function App() {
         showToast={showToast}
       />
 
-      {/* Floating AI Copilot Trigger button for quick access across all pages */}
-      <button
-        className="floating-ai-launcher-btn"
-        onClick={() => setIsAICopilotOpen(true)}
-        title="Ask TaskFlow Founder AI Copilot"
-        id="floating-ai-copilot-trigger"
-        style={{
-          position: 'fixed',
-          bottom: '24px',
-          right: '24px',
-          zIndex: 800,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '10px 16px',
-          borderRadius: '30px',
-          background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
-          color: '#FFFFFF',
-          border: '1.5px solid rgba(245, 107, 44, 0.4)',
-          boxShadow: '0 8px 24px -4px rgba(15, 23, 42, 0.4), 0 0 16px rgba(245, 107, 44, 0.25)',
-          cursor: 'pointer',
-          fontWeight: '700',
-          fontSize: '13px',
-          transition: 'transform 0.15s ease, box-shadow 0.15s ease'
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
-          e.currentTarget.style.boxShadow =
-            '0 12px 28px -4px rgba(15, 23, 42, 0.5), 0 0 20px rgba(245, 107, 44, 0.4)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'translateY(0) scale(1)';
-          e.currentTarget.style.boxShadow =
-            '0 8px 24px -4px rgba(15, 23, 42, 0.4), 0 0 16px rgba(245, 107, 44, 0.25)';
-        }}
-      >
-        <div
+      {/* Floating AI Copilot Trigger button for quick access across all pages (Founder/Admin only) */}
+      {currentUser?.role !== 'employee' && (
+        <button
+          className="floating-ai-launcher-btn"
+          onClick={() => setIsAICopilotOpen(true)}
+          title="Ask TaskFlow Founder AI Copilot"
+          id="floating-ai-copilot-trigger"
           style={{
-            width: '24px',
-            height: '24px',
-            borderRadius: '8px',
-            background: 'linear-gradient(135deg, #F56B2C 0%, #EA580C 100%)',
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            zIndex: 800,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            color: '#FFF'
+            gap: '8px',
+            padding: '10px 16px',
+            borderRadius: '30px',
+            background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
+            color: '#FFFFFF',
+            border: '1.5px solid rgba(245, 107, 44, 0.4)',
+            boxShadow: '0 8px 24px -4px rgba(15, 23, 42, 0.4), 0 0 16px rgba(245, 107, 44, 0.25)',
+            cursor: 'pointer',
+            fontWeight: '700',
+            fontSize: '13px',
+            transition: 'transform 0.15s ease, box-shadow 0.15s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+            e.currentTarget.style.boxShadow =
+              '0 12px 28px -4px rgba(15, 23, 42, 0.5), 0 0 20px rgba(245, 107, 44, 0.4)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0) scale(1)';
+            e.currentTarget.style.boxShadow =
+              '0 8px 24px -4px rgba(15, 23, 42, 0.4), 0 0 16px rgba(245, 107, 44, 0.25)';
           }}
         >
-          <Sparkles size={14} />
-        </div>
-        <span>Ask Founder AI</span>
-        <span
-          style={{
-            padding: '2px 7px',
-            backgroundColor: 'rgba(245, 107, 44, 0.25)',
-            color: '#F97316',
-            borderRadius: '10px',
-            fontSize: '10px',
-            fontWeight: '800'
-          }}
-        >
-          Gemini
-        </span>
-      </button>
+          <div
+            style={{
+              width: '24px',
+              height: '24px',
+              borderRadius: '8px',
+              background: 'linear-gradient(135deg, #F56B2C 0%, #EA580C 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#FFF'
+            }}
+          >
+            <Sparkles size={14} />
+          </div>
+          <span>Ask Founder AI</span>
+          <span
+            style={{
+              padding: '2px 7px',
+              backgroundColor: 'rgba(245, 107, 44, 0.25)',
+              color: '#F97316',
+              borderRadius: '10px',
+              fontSize: '10px',
+              fontWeight: '800'
+            }}
+          >
+            Gemini
+          </span>
+        </button>
+      )}
     </div>
   );
 }

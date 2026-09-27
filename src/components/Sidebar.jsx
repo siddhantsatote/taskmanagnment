@@ -39,12 +39,6 @@ export default function Sidebar({
           isHighlight: true
         },
         {
-          id: 'canvas',
-          label: 'Workflow Canvas',
-          icon: Workflow,
-          badge: 'Flow'
-        },
-        {
           id: 'kanban',
           label: 'My Kanban Board',
           icon: Kanban,
